@@ -39,13 +39,14 @@
 
         detect: function(){
 
-            var d = document,                           /* reference to document */
-                b = d.getElementsByTagName('body')[0],  /* reference to the body element */
-                h = d.documentElement,                  /* reference to the html element */
-                w = window,                             /* reference to the window */
-                n = navigator,                          /* reference to the navigator */
-                t = null,                               /* the Testobject */
-                f = ' js';                              /* the String for the HTML Element */
+            var d = document,                                   /* reference to document */
+                b = d.getElementsByTagName('body')[0],          /* reference to the body element */
+                h = d.documentElement,                          /* reference to the html element */
+                w = window,                                     /* reference to the window */
+                n = navigator,                                  /* reference to the navigator */
+                c = function(e) { return d.createElement(e); }  /* Alias for document.createElement*/
+                t = null,                                       /* the Testobject */
+                f = ' js';                                      /* the String for the HTML Element */
 
             /**
              * HTML5 Worker
@@ -127,7 +128,7 @@
             /**
              * Can play HTML5 Video
              */
-            t = d.createElement('video');
+            t = c('video');
             if(typeof t.canPlayType === 'function') {
                 f += ' '+this.feature.video;
             }
@@ -135,7 +136,7 @@
             /**
              * Can play HTML5 Audio
              */
-            t = d.createElement('audio');
+            t = c('audio');
             if(typeof t.canPlayType === 'function') {
                 f += ' '+this.feature.audio;
             }
