@@ -2,7 +2,8 @@
 
     Browsersupport = function(options){
 
-        this.classNames = {
+        this.extend = [];
+        this.featrue = {
             'worker'            : 'worker',
             'fullscreen'        : 'fullscreen',
             'localstorage'      : 'localstorage',
@@ -23,16 +24,18 @@
             'history'           : 'history'
         };
 
-        for (var i in options.classnames) {
-            if (!options.classnames.hasOwnProperty(i)) { continue; }
-            this.classNames[i] = options.classnames[i];
+        if(options !== undefined) {
+            for (var i in options.featrue) {
+                if (!options.featrue.hasOwnProperty(i)) { continue; }
+                this.featrue[i] = options.featrue[i];
+            }
         }
 
         return this;
 
     }
 
-    browsersupport.prototype = {
+    Browsersupport.prototype = {
 
         detect: function(){
 
@@ -48,77 +51,77 @@
              * HTML5 Worker
              */
             if( !!w.Worker ) { 
-                f += ' '+this.classNames.worker;
+                f += ' '+this.featrue.worker;
             }
 
             /**
              * FullScreenAPI
              */
             if( !!d.mozFullScreen || !!d.webkitIsFullScreen || !!w.fullScreen) { 
-                f += ' '+this.classNames.fullscreen;
+                f += ' '+this.featrue.fullscreen;
             }
 
             /**
              * LocalStorage
              */
             if( !!w.localStorage) {
-                f += ' '+this.classNames.localstorage;
+                f += ' '+this.featrue.localstorage;
             }
 
             /**
              * WebSQL
              */
             if(!!w.openDatabase) {
-                f += ' '+this.classNames.websql;
+                f += ' '+this.featrue.websql;
             }
 
             /**
              * Geolocation
              */
             if(!!n.geolocation) {
-                f += ' '+this.classNames.websql;
+                f += ' '+this.featrue.websql;
             }
 
             /**
              * Indexed DB
              */
             if(!!w.indexedDB) {
-                f += ' '+this.classNames.indexeddb;
+                f += ' '+this.featrue.indexeddb;
             }
 
             /**
              * Postmessage
              */
             if(!!w.postMessage) {
-                f += ' '+this.classNames.postmessage;
+                f += ' '+this.featrue.postmessage;
             }
 
             /**
              * hashChange Event
              */
             if(typeof w.onhashchange === 'object') {
-                f += ' '+this.classNames.hashchange;
+                f += ' '+this.featrue.hashchange;
             }
 
             /**
              * Websockets
              */
             if(!!w.WebSocket) {
-                f += ' '+this.classNames.websockets;
+                f += ' '+this.featrue.websockets;
             }
 
             /**
              * Sessionstorage
              */
             if(!!w.sessionStorage) {
-                f += ' '+this.classNames.sessionstorage;
+                f += ' '+this.featrue.sessionstorage;
             }
 
             /**
              * ApplicationCache
              */
             if(!!w.applicationCache) {
-                f += ' '+this.classNames.applicationcache;
+                f += ' '+this.featrue.applicationcache;
             }
 
             /**
@@ -126,7 +129,7 @@
              */
             t = d.createElement('video');
             if(typeof t.canPlayType === 'function') {
-                f += ' '+this.classNames.video;
+                f += ' '+this.featrue.video;
             }
 
             /**
@@ -134,52 +137,87 @@
              */
             t = d.createElement('audio');
             if(typeof t.canPlayType === 'function') {
-                f += ' '+this.classNames.audio;
+                f += ' '+this.featrue.audio;
             }
 
             /**
              * Drag and Drop Support
              */
             if(typeof t.draggable === 'boolean') {
-                f += ' '+this.classNames.draggable;
+                f += ' '+this.featrue.draggable;
             }
 
             /**
              * Canvas Support
              */
             if(!!w.CanvasRenderingContext2D) {
-                f += ' '+this.classNames.canvas;   
+                f += ' '+this.featrue.canvas;   
             }
 
             /**
              * WebGL Support
              */
             if(!!w.WebGLRenderingContext) {
-                f += ' '+this.classNames.webgl;
+                f += ' '+this.featrue.webgl;
             }
 
             /**
              * Touch Event Support
              */
             if(typeof t.ontouchstart === 'object') {
-                f += ' '+this.classNames.touchevent;
+                f += ' '+this.featrue.touchevent;
             }
 
             /**
              * Manipulate History Support
              */
             if(typeof history.pushState === 'function') {
-                f += ' '+this.classNames.history;
+                f += ' '+this.featrue.history;
+            }
+
+            /**
+             * Run the extended Tests
+             */
+            
+            for(var i=0; i<this.extend.length; i++) {
+                if(this.extend[i].test()) { f += ' '+this.extend[i].feature; }
             }
 
             h.className += f;
+        },
+
+        add: function(test){
+
+            if(typeof test.test !== 'function' || test.feature == '') {
+                throw 'oncomplete Object!';
+                return;
+            }
+
+            this.extend.push(test);
+
+
         }
 
     };
 })();
 
-var d = new browsersupport({
-    classnames: {
-        'worker': 'w'
+var d = new Browsersupport();
+
+test = {
+    featrue: 'csstransitions',
+    test   : function(){
+        var s = document.createElement('p').style, /*'s' for style. better to create an element if body yet to exist*/
+            v = ['ms','O','Moz','Webkit'];         /*'v' for vendor*/
+
+        if( s['transition'] == '' ) return true;   /*check first for prefeixed-free support*/
+        while( v.length )                          /*now go over the list of vendor prefixes and check support until one is found*/
+            if( v.pop() + 'Transition' in s )
+                return true;
+        return false;
     }
-}).detect();
+}
+
+d.add(test)
+d.detect();
+
+
