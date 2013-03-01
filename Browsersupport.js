@@ -191,19 +191,15 @@
 
             if(typeof test.test !== 'function' || test.feature == '') {
                 throw 'oncomplete Object!';
-                return;
             }
 
             if(test in this.extend || test in this.feature) {
                 throw 'A Test with this name is allready applyed';
-                return;
             }
-            
+
             this.extend.push(test);
 
         }
 
     };
 })();
-
-
