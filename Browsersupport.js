@@ -3,7 +3,7 @@
     Browsersupport = function(options){
 
         this.extend = [];
-        this.featrue = {
+        this.feature = {
             'worker'            : 'worker',
             'fullscreen'        : 'fullscreen',
             'localstorage'      : 'localstorage',
@@ -25,9 +25,9 @@
         };
 
         if(options !== undefined) {
-            for (var i in options.featrue) {
-                if (!options.featrue.hasOwnProperty(i)) { continue; }
-                this.featrue[i] = options.featrue[i];
+            for (var i in options.feature) {
+                if (!options.feature.hasOwnProperty(i)) { continue; }
+                this.feature[i] = options.feature[i];
             }
         }
 
@@ -51,77 +51,77 @@
              * HTML5 Worker
              */
             if( !!w.Worker ) { 
-                f += ' '+this.featrue.worker;
+                f += ' '+this.feature.worker;
             }
 
             /**
              * FullScreenAPI
              */
             if( !!d.mozFullScreen || !!d.webkitIsFullScreen || !!w.fullScreen) { 
-                f += ' '+this.featrue.fullscreen;
+                f += ' '+this.feature.fullscreen;
             }
 
             /**
              * LocalStorage
              */
             if( !!w.localStorage) {
-                f += ' '+this.featrue.localstorage;
+                f += ' '+this.feature.localstorage;
             }
 
             /**
              * WebSQL
              */
             if(!!w.openDatabase) {
-                f += ' '+this.featrue.websql;
+                f += ' '+this.feature.websql;
             }
 
             /**
              * Geolocation
              */
             if(!!n.geolocation) {
-                f += ' '+this.featrue.websql;
+                f += ' '+this.feature.websql;
             }
 
             /**
              * Indexed DB
              */
             if(!!w.indexedDB) {
-                f += ' '+this.featrue.indexeddb;
+                f += ' '+this.feature.indexeddb;
             }
 
             /**
              * Postmessage
              */
             if(!!w.postMessage) {
-                f += ' '+this.featrue.postmessage;
+                f += ' '+this.feature.postmessage;
             }
 
             /**
              * hashChange Event
              */
             if(typeof w.onhashchange === 'object') {
-                f += ' '+this.featrue.hashchange;
+                f += ' '+this.feature.hashchange;
             }
 
             /**
              * Websockets
              */
             if(!!w.WebSocket) {
-                f += ' '+this.featrue.websockets;
+                f += ' '+this.feature.websockets;
             }
 
             /**
              * Sessionstorage
              */
             if(!!w.sessionStorage) {
-                f += ' '+this.featrue.sessionstorage;
+                f += ' '+this.feature.sessionstorage;
             }
 
             /**
              * ApplicationCache
              */
             if(!!w.applicationCache) {
-                f += ' '+this.featrue.applicationcache;
+                f += ' '+this.feature.applicationcache;
             }
 
             /**
@@ -129,7 +129,7 @@
              */
             t = d.createElement('video');
             if(typeof t.canPlayType === 'function') {
-                f += ' '+this.featrue.video;
+                f += ' '+this.feature.video;
             }
 
             /**
@@ -137,42 +137,42 @@
              */
             t = d.createElement('audio');
             if(typeof t.canPlayType === 'function') {
-                f += ' '+this.featrue.audio;
+                f += ' '+this.feature.audio;
             }
 
             /**
              * Drag and Drop Support
              */
             if(typeof t.draggable === 'boolean') {
-                f += ' '+this.featrue.draggable;
+                f += ' '+this.feature.draggable;
             }
 
             /**
              * Canvas Support
              */
             if(!!w.CanvasRenderingContext2D) {
-                f += ' '+this.featrue.canvas;   
+                f += ' '+this.feature.canvas;   
             }
 
             /**
              * WebGL Support
              */
             if(!!w.WebGLRenderingContext) {
-                f += ' '+this.featrue.webgl;
+                f += ' '+this.feature.webgl;
             }
 
             /**
              * Touch Event Support
              */
             if(typeof t.ontouchstart === 'object') {
-                f += ' '+this.featrue.touchevent;
+                f += ' '+this.feature.touchevent;
             }
 
             /**
              * Manipulate History Support
              */
             if(typeof history.pushState === 'function') {
-                f += ' '+this.featrue.history;
+                f += ' '+this.feature.history;
             }
 
             /**
@@ -204,7 +204,7 @@
 var d = new Browsersupport();
 
 test = {
-    featrue: 'csstransitions',
+    feature: 'csstransitions',
     test   : function(){
         var s = document.createElement('p').style, /*'s' for style. better to create an element if body yet to exist*/
             v = ['ms','O','Moz','Webkit'];         /*'v' for vendor*/
