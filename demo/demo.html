@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de"> 
+	<head>
+	    <title>Demo Page</title>
+	    <script type="text/javascript" src="../Browsersupport.js"></script>
+	    <script type="text/javascript">
+
+			var features = new Browsersupport();
+
+			test = {
+			    feature: 'csstransitions',
+			    test   : function(){
+			        var s = document.createElement('p').style, /*'s' for style. better to create an element if body yet to exist*/
+			            v = ['ms','O','Moz','Webkit'];         /*'v' for vendor*/
+
+			        if( s['transition'] == '' ) return true;   /*check first for prefeixed-free support*/
+			        while( v.length )                          /*now go over the list of vendor prefixes and check support until one is found*/
+			            if( v.pop() + 'Transition' in s )
+			                return true;
+			        return false;
+			    }
+			}
+
+			features.add(test)
+			features.detect();
+
+	    </script>
+	</head>
+	<body>
+
+		<h1>This is the Demo Page</h1>
+		<p>Look at the Sourcecode to see the Magic</p>
+		<pre>
+			var features = new Browsersupport();
+
+			test = {
+			    feature: 'csstransitions',
+			    test   : function(){
+			        var s = document.createElement('p').style, /*'s' for style. better to create an element if body yet to exist*/
+			            v = ['ms','O','Moz','Webkit'];         /*'v' for vendor*/
+
+			        if( s['transition'] == '' ) return true;   /*check first for prefeixed-free support*/
+			        while( v.length )                          /*now go over the list of vendor prefixes and check support until one is found*/
+			            if( v.pop() + 'Transition' in s )
+			                return true;
+			        return false;
+			    }
+			}
+
+			features.add(test)
+			features.detect();
+		</pre>
+
+	</body>
+</html>
