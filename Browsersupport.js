@@ -165,6 +165,7 @@
             /**
              * Touch Event Support
              */
+            t = c('div');
             if(typeof t.ontouchstart === 'object') {
                 f += ' '+this.feature.touchevent;
             }
