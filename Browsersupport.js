@@ -2,7 +2,8 @@
 
     Browsersupport = function(options){
 
-        this.extend = [];
+        this.extend  = [];
+        this.has     = {};
         this.feature = {
             'worker'            : 'worker',
             'fullscreen'        : 'fullscreen',
@@ -33,7 +34,7 @@
 
         return this;
 
-    }
+    };
 
     Browsersupport.prototype = {
 
@@ -44,7 +45,7 @@
                 h = d.documentElement,                          /* reference to the html element */
                 w = window,                                     /* reference to the window */
                 n = navigator,                                  /* reference to the navigator */
-                c = function(e) { return d.createElement(e); }  /* Alias for document.createElement*/
+                c = function(e) { return d.createElement(e); }, /* Alias for document.createElement*/
                 t = null,                                       /* the Testobject */
                 f = ' js';                                      /* the String for the HTML Element */
 
@@ -177,6 +178,21 @@
                 f += ' '+this.feature.history;
             }
 
+
+            /**
+             * Iterate though all Features and set them to false or true
+             */
+            console.log('for');
+            for(var i=0, l=this.feature.length; i<l; i++ ) {
+
+            }
+            for(i in this.feature) { 
+                console.log(i);
+                this.has[i] = (f.match(new RegExp('(^|\\s)'+i+'(\\s|$)', 'g'))) ? true : false;
+            }
+            console.log('endfor');
+
+
             /**
              * Run the extended Tests
              */
@@ -185,12 +201,13 @@
                 if(this.extend[i].test()) { f += ' '+this.extend[i].feature; }
             }
 
+
             h.className += f;
         },
 
         add: function(test){
 
-            if(typeof test.test !== 'function' || test.feature == '') {
+            if(typeof test.test !== 'function' || test.feature === '') {
                 throw 'oncomplete Object!';
             }
 
