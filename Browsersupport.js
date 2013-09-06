@@ -167,7 +167,7 @@
              * Touch Event Support
              */
             t = c('div');
-            if(typeof t.ontouchstart === 'object') {
+            if(typeof t.ontouchstart === 'object' || n.msMaxTouchPoints > 0) {
                 f += ' '+this.feature.touchevent;
             }
 
